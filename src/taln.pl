@@ -2,14 +2,14 @@
 %%  Francois Portalis
 %%  Jeremy Letang
 
-%% list des questions:
+%% liste des questions:
 %%   Quel est ton nom?
 %%   Ou vis tu?
 %%   As tu un animal?
 %%   Ton animal est il bleu?
 %%   Combien as tu de bras?
 
-% creation des predication permettant de repondre aux differentes phrases
+% creation des predicats permettant de repondre aux differentes phrases
 quel(est, ton, nom):- write_ln('Mon nom est nono').
 ou(vis, tu):- write_ln('Je vis sur Mars').
 as(tu, animal):- write_ln('oui j\'ai un chien!').
@@ -27,7 +27,7 @@ g_nominal(D, N) -->
     deter(D),
     nom(N).
 
-% $definition d'un groupe nominal
+% definition d'un groupe nominal
 g_nominal(N) --> nom(N).
 
 % definition d'un groupe verbal
@@ -103,13 +103,17 @@ phrase(Question) -->
     g_nominal(_, N),
     {Question =..[I, V, N]}.
 
+% predicat question, prend en parametre la list de mots, ainsi qu'un buffer 'tampon'
+% puis unifi le predicat question trouve dans le parametre Question.
 question(Question, WordList, Buf):-
     phrase(Question, WordList, Buf);
     Question = call(error).
 
+% utilise le parametre Question pour generer la reponse, et unifie le resultat dans Reponse.
 reponse(Question, Reponse):-
     Reponse = call(Question).
 
+% lance le dialogue
 lancer:-
     lire(_, ListWord),
     question(Question, ListWord, []),
