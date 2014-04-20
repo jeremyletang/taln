@@ -2,13 +2,12 @@
 %%  Francois Portalis
 %%  Jeremy Letang
 
-% list des questions:
-%   Quel est ton nom?
-%   Ou vis tu?
-%   As tu un animal?
-%   Ton animal est il bleu?
-%   Combien as tu de bras?
-
+%% list des questions:
+%%   Quel est ton nom?
+%%   Ou vis tu?
+%%   As tu un animal?
+%%   Ton animal est il bleu?
+%%   Combien as tu de bras?
 
 % creation des predication permettant de repondre aux differentes phrases
 quel(est, ton, nom):- write_ln('Mon nom est nono').
@@ -24,12 +23,12 @@ error:- write_ln('Desole je ne connais pas la reponse').
 interrogation(I) --> inter(I).
 
 % definition d'un groupe nominal
-g_nominal(D, O) -->
+g_nominal(D, N) -->
     deter(D),
-    nom(O).
+    nom(N).
 
 % $definition d'un groupe nominal
-g_nominal(O) --> nom(O).
+g_nominal(N) --> nom(N).
 
 % definition d'un groupe verbal
 g_verbal(V) --> verb(V).
@@ -38,12 +37,6 @@ g_verbal(V) --> verb(V).
 g_verbal(V, P) -->
     verb(V),
     pronom(P).
-
-
-%% phrase(sem) -->
-%%     g_nominal(act),
-%%     g_verbal(verb, obj).
-
 
 % verbes
 verb(est) --> ['Est'].
@@ -81,14 +74,14 @@ pronom(il) --> ['il'].
 phrase(Question) -->
     interrogation(I),
     g_verbal(V),
-    g_nominal(D, O),
-    {Question =..[I, V, D, O]}.
+    g_nominal(D, N),
+    {Question =..[I, V, D, N]}.
 
 % traitement de la question 'ou vis tu'
 phrase(Question) -->
     interrogation(I),
-    g_verbal(D, O),
-    {Question =..[I, D, O]}.
+    g_verbal(D, P),
+    {Question =..[I, D, P]}.
 
 % traitement de la question 'as tu un animal'
 phrase(Question) -->
@@ -142,7 +135,7 @@ chaine_liste(Liste,[Mot|Reste]):-
     name(Mot,A),
     chaine_liste(B,Reste).
 
-% Separe une liste par rapport à un élément
+% Separe une liste par rapport a un element
 
 separer([],X,[],[]):- !.
 
